@@ -1,0 +1,33 @@
+class Solution(object): 
+    
+    def rob(self, nums):
+        def value(subset,nums):
+            val=0
+            for i in (subset):
+                val+=nums[i]
+            return val
+        def valid(comb):
+                for i in range(1,len(comb)):
+                    if comb[i]-comb[i-1]==1:
+                        return False
+                return True
+    
+        def searching(nums,i,n,subset,maxval):
+            
+                if i==n:
+                    if(valid(subset)):
+                        maxval=max(maxval,value(subset,nums))
+                        
+                else:
+                    maxval=searching(nums,i+1,n,subset[:],maxval)
+                    subset.append(i)
+                    maxval=searching(nums,i+1,n,subset[:],maxval)
+                    subset.pop()
+                return maxval
+        i=0
+        n=len(nums)
+        comb=[]
+        subset=[]
+        maxval=0
+        maxval=searching(nums,i,n,subset[:],maxval)    
+        return maxval
